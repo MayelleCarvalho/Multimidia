@@ -8,12 +8,13 @@ socket_cliente = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 socket_cliente.connect((host_server, porta_server))
 print('Conectado ao servidor')
+
 mensagem = raw_input('Digite uma msg: ')
 
-while mensagem != '\x18':
+while mensagem != '27':
     socket_cliente.sendto(mensagem.encode(), ((host_server, porta_server)))
-    mensagem_server, server = socket_cliente.recvfrom(2048)
+    mensagem_server = socket_cliente.recvfrom(2048)
     print(mensagem_server)
-    mensagem = raw_input('Digite uma msg: ').encode()
+    mensagem = raw_input('Digite uma msg: ')
 
 socket_cliente.close()

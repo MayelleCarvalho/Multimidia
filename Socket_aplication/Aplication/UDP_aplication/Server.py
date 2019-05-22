@@ -1,6 +1,4 @@
 import socket
-import _thread
-
 from pip._vendor.distlib.compat import raw_input
 
 host = ''
@@ -12,13 +10,16 @@ print('Socket criado!')
 socket_server.bind((host,porta))
 print('Socket vinculado a porta!')
 
-print('\nSocket executando!')
+print('\nSocket aguardando requisição...')
 
 while True:
+    #recebe msg do cliente:
     msg_cliente, cliente = socket_server.recvfrom(2048)
-    print(cliente, msg_cliente)
-    mensagem = raw_input('Digite uma resposta: ').encode()
-    socket_server.sendto(mensagem,cliente)
+    print(cliente, msg_cliente.decode())
+
+    #envio de resposta ao cliente:
+    mensagem = raw_input('Digite uma resposta: ')
+    socket_server.sendto(mensagem.encode(),cliente)
 
 
 socket_server.close()
